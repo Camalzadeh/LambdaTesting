@@ -111,7 +111,24 @@ public class Main {
             System.out.println("Book found: " + book);
         }
 
+        System.out.println("looking books prices ... ");// Predicate implementations
+        double temp=0;
+        for(Book tempBook : books.values()){
+            temp+=tempBook.price;
+        }
+        final double avaragePrice=temp;
+        Predicate<Book> isExpensive= (book1)->{
+            return book1.price>(avaragePrice/books.size());
+        };
 
+        for(Book tempBook : books.values()){
+            if(isExpensive.test(tempBook)){
+                System.out.println(tempBook + ". is expensive");
+            }
+            else {
+                System.out.println(tempBook + ". is not expensive");
+            }
+        }
 
     }
 }
