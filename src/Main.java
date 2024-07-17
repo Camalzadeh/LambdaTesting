@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 public class Main {
     public static void main(String[] args) {
         HashMap<String, Book> books = new HashMap<>();
+        System.out.println("All books: ");
         books.put("1", new Book("Math", Genres.SCIENCE, 10.0, LocalDate.of(2010, 1, 1)));
         books.put("2", new Book("History of Art", Genres.HISTORY, 15.0, LocalDate.of(2015, 6, 12)));
         books.put("3", new Book("Fantasy Land", Genres.FANTASY, 20.0, LocalDate.of(2020, 3, 25)));
@@ -15,8 +16,23 @@ public class Main {
 
         books.forEach((key, book) -> System.out.println(key + ": " + book));
 
+        System.out.println("searching... ");
+        Search<Book> searchBook = (book, parameter) ->  //search implementations
+                book.title.contains(parameter)
+                || book.genre.toString().contains(parameter)
+                || book.publicationDate.toString().contains(parameter)
+                || ((Double) book.price).toString().contains(parameter);
 
 
+        String paramatr="25";
+
+        for (Book book : books.values()) {
+            if(searchBook.search(book, paramatr)){
+                System.out.println(book);
+            }
+        }
+
+        System.out.println("filtering...");
         Filter<Book, LocalDate> filterTime = (book,time) -> book.publicationDate.isAfter(time);//filter implementations
         Filter<Book, Genres> filterGenre = (book, genre) -> genre.equals(book.genre);
         Filter<Book, Double> filterValue = (book, value) -> book.price<=value;
@@ -51,8 +67,9 @@ public class Main {
             }
         }
 
+        System.out.println("adding taxes...");
 
-        Consumer<Book> taxFunc = (book)->book.price*=1.1;//add tax implementations
+        Consumer<Book> taxFunc = (book)->book.price*=1.1;// comsumer implementations
 
         for (Book book : books.values()) {
             taxFunc.accept(book);
