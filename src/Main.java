@@ -13,7 +13,8 @@ public class Main {
         books.put("5", new Book("Romantic Tales", Genres.ROMANCE, 18.0, LocalDate.of(2016, 2, 14)));
 
         books.forEach((key, book) -> System.out.println(key + ": " + book));
-        Filter<Book, LocalDate> filterTime = (book,time) -> book.publicationDate.isAfter(time);
+
+        Filter<Book, LocalDate> filterTime = (book,time) -> book.publicationDate.isAfter(time);//filter implementations
         Filter<Book, Genres> filterGenre = (book, genre) -> genre.equals(book.genre);
         Filter<Book, Double> filterValue = (book, value) -> book.price<=value;
 
