@@ -79,12 +79,13 @@ public class Main {
         books.forEach((key, book) -> System.out.println(key + ": " + book));
 
         System.out.println("taking random book...");//supplier implementations
+
+        Random rand = new Random();
+        Book[] bookList=books.values().toArray(new Book[0]);
+
         Supplier<Book> takeRandomBook = ()->{
-            Random rand = new Random();
-            ArrayList<Book> bookList;
-            bookList =(ArrayList<Book>) books.values();
-            int random = rand.nextInt(bookList.size());
-            return bookList.get(random);
+            int random = rand.nextInt(bookList.length);
+            return bookList[random];
         };
 
         System.out.println(takeRandomBook.get());
