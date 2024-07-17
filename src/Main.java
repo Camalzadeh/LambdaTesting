@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -13,6 +14,8 @@ public class Main {
         books.put("5", new Book("Romantic Tales", Genres.ROMANCE, 18.0, LocalDate.of(2016, 2, 14)));
 
         books.forEach((key, book) -> System.out.println(key + ": " + book));
+
+
 
         Filter<Book, LocalDate> filterTime = (book,time) -> book.publicationDate.isAfter(time);//filter implementations
         Filter<Book, Genres> filterGenre = (book, genre) -> genre.equals(book.genre);
@@ -47,6 +50,17 @@ public class Main {
                 counter++;
             }
         }
+
+
+        Consumer<Book> taxFunc = (book)->book.price*=1.1;//add tax implementations
+
+        for (Book book : books.values()) {
+            taxFunc.accept(book);
+        }
+
+        books.forEach((key, book) -> System.out.println(key + ": " + book));
+
+
 
     }
 }
