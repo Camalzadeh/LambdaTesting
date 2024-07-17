@@ -91,5 +91,27 @@ public class Main {
         System.out.println(takeRandomBook.get());
 
 
+        System.out.println("looking books with same genre... ");// function implementations
+        Function<Book,Book> bookWithSameGenre = (book)->{
+            for(Book tempBook : books.values()){
+                if(tempBook.equals(book)){
+                    continue;
+                }
+                if(tempBook.genre.equals(book.genre)){
+                    return tempBook;
+                }
+            }
+            return null;
+        };
+
+        Book book = bookWithSameGenre.apply(takeRandomBook.get());
+        if(book == null){
+            System.out.println("Book not found");
+        }else{
+            System.out.println("Book found: " + book);
+        }
+
+
+
     }
 }
