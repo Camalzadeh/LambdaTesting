@@ -1,8 +1,9 @@
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,7 +25,7 @@ public class Main {
                 || ((Double) book.price).toString().contains(parameter);
 
 
-        String paramatr="25";
+        String paramatr="GENRE";
 
         for (Book book : books.values()) {
             if(searchBook.search(book, paramatr)){
@@ -69,7 +70,7 @@ public class Main {
 
         System.out.println("adding taxes...");
 
-        Consumer<Book> taxFunc = (book)->book.price*=1.1;// comsumer implementations
+        Consumer<Book> taxFunc = (book)->book.price*=1.1;// consumer implementations
 
         for (Book book : books.values()) {
             taxFunc.accept(book);
@@ -77,6 +78,16 @@ public class Main {
 
         books.forEach((key, book) -> System.out.println(key + ": " + book));
 
+        System.out.println("taking random book...");//supplier implementations
+        Supplier<Book> takeRandomBook = ()->{
+            Random rand = new Random();
+            ArrayList<Book> bookList;
+            bookList =(ArrayList<Book>) books.values();
+            int random = rand.nextInt(bookList.size());
+            return bookList.get(random);
+        };
+
+        System.out.println(takeRandomBook.get());
 
 
     }
